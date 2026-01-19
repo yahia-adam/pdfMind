@@ -5,6 +5,7 @@ build/
 dist/
 wheels/
 *.egg-info
+chroma_db/nomic-embed-text/
 
 # Virtual environments
 .venv
