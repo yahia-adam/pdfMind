@@ -16,4 +16,5 @@ dependencies = [
     "pdfminer.six",
     "pymupdf",
     "notebook>=7.5.2",
+    "openevals>=0.1.3",
 ]
