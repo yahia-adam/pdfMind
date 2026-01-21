@@ -3,6 +3,11 @@ from fastapi import FastAPI
 from src.pdf_mind.build_rag import build_rag, rag_bot
 from src.pdf_mind.config import settings
 
+from pydantic import BaseModel
+
+class QuestionRequest(BaseModel):
+    question: str
+
 app = FastAPI()
 
 chat_model, retriever = build_rag(is_train=False, is_debug=settings.debug_mode)
@@ -23,14 +28,14 @@ def health_check():
     if chat_model and retriever:
         question = "Quel est le code de qualification pour la maçonnerie ?"
         res = rag_bot(question, retriever, chat_model)
-        return {"status": "ok", "question": question, "answer": res["answer"], "documents": res["documents"]}
+        return {"status_code": 200, "response": {"answer": res["answer"], "documents": res["documents"]}}
     else:
-        return {"status": "error", "message": "Chat model or retriever not initialized"}
+        return {"status_code": 500, "response": {"answer": "Chat model or retriever not initialized", "documents": []}}
 
 @app.post("/ask")
-def ask(question: str):
+def ask(request: QuestionRequest):
     if chat_model and retriever:
-        res = rag_bot(question, retriever, chat_model)
-        return {"status": "ok", "question": question, "answer": res["answer"], "documents": res["documents"]}
+        res = rag_bot(request.question, retriever, chat_model)
+        return {"status_code": 200, "response": {"answer": res["answer"], "documents": res["documents"]}}
     else:
-        return {"status": "error", "message": "Chat model or retriever not initialized"}
+        return {"status_code": 500, "response": {"answer": "Chat model or retriever not initialized", "documents": []}}

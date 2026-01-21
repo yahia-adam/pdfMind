@@ -121,5 +121,7 @@ def build_rag(is_train=False, is_debug=False):
 
 if __name__ == "__main__":
     chat_model, retriever = build_rag(is_train=False, is_debug=settings.debug_mode)
+
+    print("test avec : Quelle est la mission principale de QUALIBAT ?")
     res = rag_bot("Quelle est la mission principale de QUALIBAT ?", retriever, chat_model)
-    print(res["answer"])
+    print(res)
