@@ -41,20 +41,40 @@ const MarkdownRenderer = ({ content, onCitationClick, setPdfPage, documents }: {
                     a: ({ href, children, ...props }) => {
                         if (href?.startsWith('citation:')) {
                             const id = parseInt(href.split(':')[1]);
+                            const doc = documents?.find((d: any) => d.metadata.id === id); // Find doc once
+
                             return (
-                                <button
-                                    onClick={() => {
-                                        const doc = documents?.find(d => d.metadata.id === id);
-                                        if (doc) {
-                                            onCitationClick(id);
-                                            setPdfPage(doc.metadata.page);
-                                        }
-                                    }}
-                                    className="inline-flex items-center justify-center px-1.5 py-0.5 ml-1 text-xs font-bold text-blue-600 bg-blue-100 rounded cursor-pointer hover:bg-blue-200 no-underline align-middle transform -translate-y-px"
-                                    title={`Voir la source ${id}`}
-                                >
-                                    {id}
-                                </button>
+                                <span className="group relative inline-block align-middle">
+                                    <button
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            if (doc) {
+                                                console.log(`Navigating to citation ${id}, page ${doc.metadata.page}`);
+                                                onCitationClick(id);
+                                                setPdfPage(doc.metadata.page);
+                                            } else {
+                                                console.warn(`Document not found for citation ${id}`);
+                                            }
+                                        }}
+                                        className="inline-flex items-center justify-center px-1.5 py-0.5 ml-1 text-xs font-bold text-blue-600 bg-blue-100 rounded cursor-pointer hover:bg-blue-200 no-underline transform -translate-y-px transition-colors z-10 relative"
+                                    >
+                                        {id}
+                                    </button>
+
+                                    {/* Tooltip */}
+                                    {doc && (
+                                        <div className="invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-opacity absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 bg-slate-800 text-white text-xs rounded-lg p-3 shadow-xl z-50 pointer-events-none">
+                                            <div className="font-bold mb-1 border-b border-slate-600 pb-1 text-slate-300">
+                                                Page {doc.metadata.page}
+                                            </div>
+                                            <div className="line-clamp-4 leading-relaxed text-slate-200">
+                                                {doc.page_content}
+                                            </div>
+                                            {/* Arrow */}
+                                            <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-px border-4 border-transparent border-t-slate-800"></div>
+                                        </div>
+                                    )}
+                                </span>
                             );
                         }
                         return (
