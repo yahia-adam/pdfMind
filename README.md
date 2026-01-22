@@ -114,3 +114,10 @@ Page d'accueil simple listant les endpoints disponibles.
 
 - **URL** : `/`
 - **Méthode** : `GET`
+
+
+Qu'est-ce que la mention RGE ?
+Quel est le code de qualification pour la maçonnerie ?
+Quelles sont les activités de la Famille 5 ?
+Comment décrypter le code à 4 chiffres ?
+Quels travaux nécessitent une certification Amiante ?

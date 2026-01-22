@@ -39,7 +39,7 @@ RÈGLES DE RÉDACTION (À SUIVRE IMPÉRATIVEMENT) :
 1. CITATIONS OBLIGATOIRES (RÈGLE D'OR) :
    - Pour chaque affirmation, fait technique ou chiffre, tu DOIS insérer l'ID du chunk correspondant entre crochets juste après l'information.
    - Exemple : "Le code 2111 correspond à la maçonnerie [45]."
-   - Si une information provient de plusieurs chunks, liste les IDs : [12, 14].
+   - Si une information provient de plusieurs chunks, liste les IDs : [12][14].
    - Ne crée jamais de citation si l'ID n'est pas explicitement dans le contexte fourni.
 
 2. STRUCTURE VISUELLE :

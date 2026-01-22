@@ -1,0 +1,33 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+
+
+/* React PDF Viewer Styles */
+@import '@react-pdf-viewer/core/lib/styles/index.css';
+@import '@react-pdf-viewer/default-layout/lib/styles/index.css';
+
+:root {
+  --background: #f8fafc;
+  --foreground: #1e293b;
+}
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  --color-qualibat-blue: #005BBB;
+  --color-qualibat-dark: #003366;
+  --color-qualibat-gray: #64748b;
+  --color-qualibat-bg: #f1f5f9;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  height: 100vh;
+  overflow: hidden;
+}

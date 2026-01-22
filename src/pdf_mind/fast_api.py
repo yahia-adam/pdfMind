@@ -1,14 +1,11 @@
-import os
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from src.pdf_mind.build_rag import build_rag, rag_bot
 from src.pdf_mind.config import settings
 
 class QuestionRequest(BaseModel):
     question: str
-
-from fastapi.staticfiles import StaticFiles
-from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
@@ -20,13 +17,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Mount frontend
-app.mount("/chat", StaticFiles(directory="frontend", html=True), name="frontend")
-
-
 chat_model, retriever = build_rag(is_train=False, is_debug=settings.debug_mode)
 
 @app.get("/")
+
 def read_root():
     return {
         "message": f"Welcome to {settings.app_name}",
