@@ -4,6 +4,7 @@ import React, { useState, useRef } from 'react';
 import ChatPanel from '@/components/ChatPanel';
 import PDFViewer from '@/components/PDFViewer';
 import { Settings, PanelLeftClose, PanelLeftOpen } from 'lucide-react';
+import Image from 'next/image';
 
 export default function Home() {
   const [targetPage, setTargetPage] = useState<number>(0);
@@ -38,7 +39,15 @@ export default function Home() {
             {isPdfVisible ? <PanelLeftClose size={20} /> : <PanelLeftOpen size={20} />}
           </button>
 
-          <div className="bg-[#0055A4] text-white font-bold p-1 rounded text-xs">QB</div>
+          <div className="relative w-8 h-8 flex-shrink-0">
+            <Image
+              src="/logo_qualibat.svg"
+              alt="Logo Qualibat"
+              fill
+              className="object-contain"
+              priority
+            />
+          </div>
           <h1 className="font-bold text-slate-800 text-lg tracking-tight">
             QualiBot <span className="font-medium text-slate-400 text-sm ml-2">Assistant Nomenclature</span>
           </h1>

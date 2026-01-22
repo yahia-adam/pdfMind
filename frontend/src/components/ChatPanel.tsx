@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { Send, Bot, User } from 'lucide-react';
+import Image from 'next/image';
 import { clsx } from 'clsx';
 import { askQuestion } from '@/lib/api';
 import ReactMarkdown from 'react-markdown';
@@ -208,7 +209,16 @@ export default function ChatPanel({ onCitationClick, setPdfPage, documentsMap }:
                                     msg.role === 'user' ? 'bg-slate-200' : 'bg-[var(--color-qualibat-blue)] text-white'
                                 )}
                             >
-                                {msg.role === 'user' ? <User size={16} /> : <Bot size={16} />}
+                                {msg.role === 'user' ? <User size={16} /> : (
+                                    <div className="relative w-5 h-5">
+                                        <Image
+                                            src="/logo_qualibat.svg"
+                                            alt="Bot"
+                                            fill
+                                            className="object-contain"
+                                        />
+                                    </div>
+                                )}
                             </div>
                             <div
                                 className={clsx(
