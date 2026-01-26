@@ -86,7 +86,15 @@ CONTEXTE DOCUMENTAIRE :
    return {"answer": ai_msg.content, "documents": docs}
 
 def build_rag(is_train=False, is_debug=False):
-    embeddings = OllamaEmbeddings(model=settings.embedding_model_name)
+    if settings.model_provider == "openai":
+        from langchain_openai import OpenAIEmbeddings
+        embeddings = OpenAIEmbeddings(
+            model=settings.embedding_model_name,
+            api_key=settings.openai_api_key,
+            openai_api_base=settings.openai_url
+        )
+    else:
+        embeddings = OllamaEmbeddings(model=settings.embedding_model_name)
     
     if is_train:
         if (os.path.exists(settings.chroma_db_dir)):
@@ -131,7 +139,16 @@ def build_rag(is_train=False, is_debug=False):
     
     if is_debug:
         print("Creating chat model...")
-    chat_model = ChatOllama(model=settings.chat_model_name)
+        
+    if settings.model_provider == "openai":
+        from langchain_openai import ChatOpenAI
+        chat_model = ChatOpenAI(
+            model=settings.chat_model_name,
+            api_key=settings.openai_api_key,
+            openai_api_base=settings.openai_url
+        )
+    else:
+        chat_model = ChatOllama(model=settings.chat_model_name)
     
     if is_debug:
         print("Chat model and retriever created successfully.")
