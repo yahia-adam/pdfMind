@@ -12,13 +12,13 @@ from langchain_community.document_loaders import DirectoryLoader, PyMuPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.runnables import RunnablePassthrough, RunnableParallel
 from langchain_core.output_parsers import StrOutputParser
-from src.pdf_mind.config import settings
+from src.config import settings
 
 # 2. Evaluation
 from langsmith import Client, wrappers, traceable
 from openevals.llm import create_llm_as_judge
 from openevals.prompts import CORRECTNESS_PROMPT
-from src.pdf_mind.data_processing import clean_documents
+from src.data_processing import clean_documents
 
 @traceable()
 def rag_bot(question: str, retriever: Chroma, llm: ChatOllama) -> dict:

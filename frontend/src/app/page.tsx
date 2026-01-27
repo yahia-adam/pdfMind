@@ -49,7 +49,7 @@ export default function Home() {
             />
           </div>
           <h1 className="font-bold text-slate-800 text-lg tracking-tight">
-            QualiBot <span className="font-medium text-slate-400 text-sm ml-2">Assistant Nomenclature</span>
+            QualiBat <span className="font-medium text-slate-400 text-sm ml-2">Assistant Nomenclature</span>
           </h1>
         </div>
         <button className="text-slate-400 hover:text-slate-600" aria-label="Settings">

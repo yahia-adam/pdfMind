@@ -1,123 +1,37 @@
-# QualiBot
+# QualiBat
 
-Ce projet est un chatbot qui répond aux questions sur les codes de qualification pour les artisans du bâtiment. 
+Ce projet est un chatbot RAG (Retrieval-Augmented Generation) conçu pour répondre aux questions sur les codes de qualification pour les artisans du bâtiment (Qualibat, RGE, Normes).
 
-## 📋 Prérequis
+## 📂 Structure du projet
 
-- **Python** >= 3.12
-- **UV** (recommandé pour la gestion des dépendances)
+- **[backend/](./backend/README.md)** : API FastAPI, logique RAG, et gestion de la base vectorielle (ChromaDB).
+- **[frontend/](./frontend/README.md)** : Interface utilisateur Next.js pour discuter avec le chatbot.
+- **docker-compose.yml** : Orchestration des conteneurs pour un déploiement facile.
 
-## 🚀 Installation
+## 🚀 Démarrage Rapide (Docker)
 
-1.  **Cloner le projet**
+La méthode la plus simple pour lancer le projet est d'utiliser Docker Compose.
 
-    ```bash
-    git clone git@github.com:yahia-adam/pdfMind.git qualiBot
-    cd qualiBot
-    ```
+1.  **Prérequis** : Assurez-vous d'avoir Docker et Docker Compose installés.
 
-2.  **Installer les dépendances**
-
-    ```bash
-    uv sync
-    ```
-    *Ou avec pip :*
-    ```bash
-    pip install .
-    ```
-
-3.  **Configuration**
-    Créez un fichier `.env` à la racine du projet (voir `.env.example`) et configurez vos clés API et chemins si nécessaire.
-
+2.  **Configuration** :
+    Créez un fichier `.env` à la racine (voir `.env.example`).
     ```env
-    # Exemple de variables d'environnement
-    ROOT_DIR=
-    APP_NAME=pdfMind
-    DEBUG_MODE=True
+    OPENAI_API_KEY=votre_clé_api
+    # Autres configurations...
     ```
 
-## 🤖 Initialisation du chatbot
+3.  **Lancer l'application** :
+    ```bash
+    docker-compose up --build
+    ```
 
-Pour initialiser le chatbot, il faut d'abord construire le RAG.
+4.  **Accéder à l'application** :
+    - **Frontend (Chat)** : [http://localhost:3000](http://localhost:3000)
+    - **Backend (Docs API)** : [http://localhost:8000/docs](http://localhost:8000/docs)
 
-```bash
-python -m src.pdf_mind.build_rag
-```
+## 🛠️ Développement Local
 
-## 🗄️ Démarrage du serveur
-
-Pour lancer le serveur de développement FastAPI :
-
-```bash
-fastapi dev src/pdf_mind/fast_api.py
-```
-
-Le serveur sera accessible à l'adresse : `http://127.0.0.1:8000`
-
-### Documentation du serveur
-
-### 1. Vérification du système (Health Check)
-Vérifie que le modèle de chat et le retriever sont bien initialisés.
-
-- **URL** : `/health`
-- **Méthode** : `GET`
-- **Exemple de requête** :
-  ```bash
-  curl -X GET "http://localhost:8000/health"
-  ```
-- **Réponse (Succès)** :
-  ```json
-  {
-    "status": "ok",
-    "question": "Quel est le code de qualification pour la maçonnerie ?",
-    "answer": "La qualification pour la maçonnerie est...",
-    "documents": [...]
-  }
-  ```
-
-### 2. Poser une question (Ask)
-interroge le chatbot RAG.
-
-- **URL** : `/ask`
-- **Méthode** : `POST`
-- **Content-Type** : `application/json`
-- **Corps de la requête** :
-  ```json
-  {
-    "question": "Votre question ici"
-  }
-  ```
-- **Exemple de requête** :
-  ```bash
-  curl -X POST "http://localhost:8000/ask" \
-       -H "Content-Type: application/json" \
-       -d '{"question": "Quel est le code de qualification pour la maçonnerie ?"}'
-  ```
-- **Réponse** :
-  ```json
-  {
-      "status_code": 200,
-      "response": {
-          "answer": "Réponse générée par le modèle...",
-          "documents": [
-              {
-                  "page_content": "Extrait du document source...",
-                  "metadata": { "source": "...", "page": 60 }
-              }
-          ]
-      }
-  }
-  ```
-
-### 3. Accueil
-Page d'accueil simple listant les endpoints disponibles.
-
-- **URL** : `/`
-- **Méthode** : `GET`
-
-
-Qu'est-ce que la mention RGE ?
-Quel est le code de qualification pour la maçonnerie ?
-Quelles sont les activités de la Famille 5 ?
-Comment décrypter le code à 4 chiffres ?
-Quels travaux nécessitent une certification Amiante ?
+Pour travailler sur le backend ou le frontend individuellement, consultez leurs README respectifs :
+- [Documentation Backend](./backend/README.md)
+- [Documentation Frontend](./frontend/README.md)

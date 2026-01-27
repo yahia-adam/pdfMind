@@ -5,10 +5,9 @@ from pydantic_settings import BaseSettings
 load_dotenv()
 class Settings(BaseSettings):
     # On récupère les valeurs brutes du .env d'abord
-    root_dir: str = os.getenv("ROOT_DIR")
-    train_data_name: str = os.getenv("TRAIN_DATA_DIR")
-    test_data_name: str = os.getenv("TEST_DATA_DIR")
-    chroma_db_name: str = os.getenv("CHROMA_DB_DIR")
+    train_data_dir: str = os.getenv("TRAIN_DATA_DIR")
+    test_data_dir: str = os.getenv("TEST_DATA_DIR")
+    chroma_db_dir: str = os.getenv("CHROMA_DB_DIR")
 
     # Models
     # Models Configuration
@@ -24,6 +23,24 @@ class Settings(BaseSettings):
     openai_chat_model_name: str = os.getenv("OPENAI_CHAT_MODEL_NAME", "gpt-3.5-turbo")
     openai_embedding_model_name: str = os.getenv("OPENAI_EMBEDDING_MODEL_NAME", "text-embedding-ada-002")
     openai_api_key: str = os.getenv("OPENAI_API_KEY", "")
+
+    # verify models
+    if (self.model_provider == "openai"):
+        if (self.openai_api_key == ""):
+            raise ValueError("OPENAI_API_KEY is not set")
+        if (self.openai_url == ""):
+            raise ValueError("OPENAI_URL is not set")
+        if (self.openai_chat_model_name == ""):
+            raise ValueError("OPENAI_CHAT_MODEL_NAME is not set")
+        if (self.openai_embedding_model_name == ""):
+            raise ValueError("OPENAI_EMBEDDING_MODEL_NAME is not set")
+    elif (self.model_provider == "ollama"):
+        if (self.ollama_chat_model_name == ""):
+            raise ValueError("OLLAMA_CHAT_MODEL_NAME is not set")
+        if (self.ollama_embedding_model_name == ""):
+            raise ValueError("OLLAMA_EMBEDDING_MODEL_NAME is not set")
+    else:
+        raise ValueError("MODEL_PROVIDER is not set")
 
     @property
     def chat_model_name(self) -> str:
@@ -42,19 +59,7 @@ class Settings(BaseSettings):
     langsmith_api_key: str = os.getenv("LANGSMITH_API_KEY")
     langsmith_tracing: bool = os.getenv("LANGSMITH_TRACING", False)
 
-    app_name: str = os.getenv("APP_NAME", "QualiBot")
+    app_name: str = os.getenv("APP_NAME", "QualiBat")
     debug_mode: bool = os.getenv("DEBUG_MODE", False)
-
-    @property
-    def train_data_dir(self) -> str:
-        return os.path.join(self.root_dir, self.train_data_name)
-
-    @property
-    def test_data_dir(self) -> str:
-        return os.path.join(self.root_dir, self.test_data_name)
-
-    @property
-    def chroma_db_dir(self) -> str:
-        return os.path.join(self.root_dir, self.chroma_db_name)
 
 settings = Settings()

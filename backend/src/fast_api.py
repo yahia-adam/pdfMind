@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from src.pdf_mind.build_rag import build_rag, rag_bot
-from src.pdf_mind.config import settings
+from src.build_rag import build_rag, rag_bot
+from src.config import settings
 
 class QuestionRequest(BaseModel):
     question: str
