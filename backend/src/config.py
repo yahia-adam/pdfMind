@@ -13,7 +13,7 @@ class Settings(BaseSettings):
     chroma_db_dir: str
 
     # Modèle Global
-    model_provider: str = "ollama"  # Valeur par défaut
+    model_provider: str = "openai"  # Valeur par défaut
 
     # Ollama Settings
     ollama_url: str = "http://localhost:11434"
