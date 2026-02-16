@@ -61,21 +61,7 @@ export default function Home() {
       <div className="flex-1 w-full overflow-hidden relative">
         {/* Using a simple flex layout instead of PanelGroup until we resolve imports */}
         <div className="flex h-full">
-          {/* PDF Panel */}
-          {isPdfVisible && (
-            <>
-              <div
-                className="bg-slate-100 h-full"
-                style={{ width: '35%', minWidth: '300px' }}
-              >
-                <PDFViewer fileUrl={pdfUrl} targetPage={targetPage} />
-              </div>
-
-              {/* Resize Handle */}
-              <div className="w-1.5 bg-slate-200 hover:bg-blue-400 transition-colors cursor-col-resize" />
-            </>
-          )}
-
+        
           {/* Chat Panel */}
           <div className="flex-1 bg-white h-full" style={{ minWidth: '400px' }}>
             <ChatPanel
