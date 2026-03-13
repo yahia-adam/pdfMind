@@ -32,7 +32,7 @@ class Settings(BaseSettings):
     langsmith_tracing: bool = False
 
     app_name: str = "QualiBat"
-    debug_mode: bool = False
+    debug_mode: bool = True
 
     # Logique de validation
     @model_validator(mode='after')

@@ -107,11 +107,16 @@ def build_rag(is_train=False, is_debug=False):
         
         if is_debug:
             print("Loading documents...")
-        loader = DirectoryLoader(settings.train_data_dir, glob="*.pdf", loader_cls=PyMuPDFLoader)
+        loader = DirectoryLoader(
+            settings.train_data_dir,
+            glob="**/*.pdf",
+            recursive=True,
+            use_multithreading=True,
+            loader_cls=PyMuPDFLoader)
         documents = loader.load()
-        
+
         if is_debug:
-            print("Cleaning documents...")
+            print(f"Cleaning documents... {len(documents)}")
         documents = clean_documents(documents)
 
         if is_debug:
@@ -155,7 +160,7 @@ def build_rag(is_train=False, is_debug=False):
     return chat_model, retriever
 
 if __name__ == "__main__":
-    chat_model, retriever = build_rag(is_train=False, is_debug=settings.debug_mode)
+    chat_model, retriever = build_rag(is_train=True, is_debug=settings.debug_mode)
 
     print("test avec : Quelle est la mission principale de QUALIBAT ?")
     res = rag_bot("Quelle est la mission principale de QUALIBAT ?", retriever, chat_model)
