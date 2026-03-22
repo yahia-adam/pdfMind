@@ -1,11 +1,25 @@
 import os
+from pathlib import Path
 from typing import Optional
 from pydantic import model_validator, Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+# Remonte jusqu'à trouver le .env (ou la racine du repo)
+def find_dotenv(start: Path = Path(__file__).resolve().parent) -> Path:
+    for directory in [start, *start.parents]:
+        candidate = directory / ".env"
+        if candidate.exists():
+            return candidate
+    return start / ".env"  # fallback
+
+
 class Settings(BaseSettings):
     # Configuration de Pydantic pour lire le fichier .env
-    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
+    model_config = SettingsConfigDict(
+        env_file=find_dotenv(),
+        env_file_encoding="utf-8",
+        extra="ignore"
+    )
 
     # Chemins
     train_data_dir: str
